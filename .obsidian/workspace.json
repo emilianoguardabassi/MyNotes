@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "6_MainNotes/CPU-Virtualización.md",
+                "file": "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "CPU-Virtualización"
+              "title": "Ley de Grandes Números y Métodos de ..."
             }
           }
         ]
@@ -160,12 +160,13 @@
   },
   "active": "653786797cce2aa9",
   "lastOpenFiles": [
+    "6_MainNotes/Introducción a la Lógica y Computación.md",
+    "6_MainNotes/CPU-Virtualización.md",
     "6_MainNotes/Test de hipótesis.md",
     "2_Source/Sistemas Operativos material.md",
     "6_MainNotes/Persistencia.md",
     "6_MainNotes/Concurrencia.md",
     "6_MainNotes/RAM-Virtualización.md",
-    "6_MainNotes/CPU-Virtualización.md",
     "6_MainNotes/Sistemas Operativos.md",
     "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
     "6_MainNotes/Probabilidad y Estadística parte 2.md",
@@ -179,7 +180,6 @@
     "6_MainNotes/Intervalos de confianza y ....md",
     "6_MainNotes/<asd",
     "Sin título.canvas",
-    "6_MainNotes/Introducción a la Lógica y Computación.md",
     "6_MainNotes/LenguajesLyC.md",
     "6_MainNotes/Lógica Proposicional.md",
     "6_MainNotes/Estructuras Ordenadas.md",

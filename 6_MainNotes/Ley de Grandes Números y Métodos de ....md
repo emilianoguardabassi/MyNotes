@@ -45,11 +45,14 @@ Supongamos que se quiere estimar un sólo parámetro $\theta$ , el estimador  $\
 $$
 \hat{\theta} = \arg \max_{\theta} \prod_{i=1}^{n} p(x_i \mid \theta)
 $$
+
 Ese **estadístico** también realiza el máximo de la función de log-verosimilitud $\ell(\theta) \equiv \ln p(\mathbf{x}_1, \dots, \mathbf{x}_n \mid \theta)$, esto es:
 
 $$
 \hat{\theta} = \arg \max_{\theta} \sum_{i=1}^{n} \ln p(\mathbf{x}_i \mid \theta)
 $$
+
+
 Generalizando la verosimilitud como una función de los $k$ parámetros desconocidos $\theta=(\theta_1, \dots, \theta_k)$; el estimador vectorial de máxima verosimilitud es el vector $\hat{\theta} = (\hat{\theta}_1, \dots, \hat{\theta}_k)$ que maximiza la $\ell(\theta) \equiv \ln p(\mathbf{x} \mid \theta)$
 
 $$
@@ -68,12 +71,15 @@ $$
 $$
 
 3. ***Propiedad de invarianza del estimador por MV*** #completar 
+
 $$
 P_{95} = \mu + z_{0.95} \cdot \sigma
 $$
+
 $$
 \hat{P}_{95} = \hat{\mu} + z_{0.95} \cdot \hat{\sigma}
 $$
+
 ## Referencias
 
 - [[Probabilidad y estadística material]]
