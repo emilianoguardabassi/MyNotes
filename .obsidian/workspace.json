@@ -1,0 +1,200 @@
+{
+  "main": {
+    "id": "761b8a934963850d",
+    "type": "split",
+    "children": [
+      {
+        "id": "1414e53e021c7fae",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "653786797cce2aa9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "6_MainNotes/CPU-Virtualización.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "CPU-Virtualización"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "67d0914ba20421c7",
+    "type": "split",
+    "children": [
+      {
+        "id": "cd40d75a647e22a2",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "cf2f1e0fcf0c90d3",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Explorador de archivos"
+            }
+          },
+          {
+            "id": "0dc0204e17d5c072",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Buscar"
+            }
+          },
+          {
+            "id": "487b7eaef2ebcd2a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Marcadores"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 295.5
+  },
+  "right": {
+    "id": "16c411611ae6f647",
+    "type": "split",
+    "children": [
+      {
+        "id": "a1887e0c9ad535bd",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "5698d8a5ac7aa205",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Enlaces entrantes"
+            }
+          },
+          {
+            "id": "af1a9b7c22e3e6b4",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Enlaces salientes"
+            }
+          },
+          {
+            "id": "4b4f33ad4ae4e60c",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Etiquetas"
+            }
+          },
+          {
+            "id": "189c190fbe5bad3e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {},
+              "icon": "lucide-list",
+              "title": "Esquema"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false
+    }
+  },
+  "active": "653786797cce2aa9",
+  "lastOpenFiles": [
+    "6_MainNotes/Test de hipótesis.md",
+    "2_Source/Sistemas Operativos material.md",
+    "6_MainNotes/Persistencia.md",
+    "6_MainNotes/Concurrencia.md",
+    "6_MainNotes/RAM-Virtualización.md",
+    "6_MainNotes/CPU-Virtualización.md",
+    "6_MainNotes/Sistemas Operativos.md",
+    "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
+    "6_MainNotes/Probabilidad y Estadística parte 2.md",
+    "2_Source/Probabilidad y estadística material.md",
+    "2_Source/Introducción a la Lógica y Computación material.md",
+    "5_Templates/Child Note.md",
+    "5_Templates/Daily Note.md",
+    "5_Templates/Main Note.md",
+    "5_Templates/Source Note.md",
+    "6_MainNotes/().md",
+    "6_MainNotes/Intervalos de confianza y ....md",
+    "6_MainNotes/<asd",
+    "Sin título.canvas",
+    "6_MainNotes/Introducción a la Lógica y Computación.md",
+    "6_MainNotes/LenguajesLyC.md",
+    "6_MainNotes/Lógica Proposicional.md",
+    "6_MainNotes/Estructuras Ordenadas.md",
+    "6_MainNotes/PyE.md",
+    "6_MainNotes/Source.md",
+    "6_MainNotes/null.md",
+    "6_MainNotes/minotetesting.md",
+    "4_Indexes",
+    "3_Tags",
+    "2_Source",
+    "1_Draft",
+    "5_Templates",
+    "6_MainNotes",
+    "1-Draft",
+    "6- MainNotes",
+    "5-Templates"
+  ]
+}
