@@ -7,6 +7,7 @@ Tags: #Source #PyE #FaMAF
 
 - [Documentación](#Documentación)
 - [Clases](##Clases)
+- [Cronograma](##Cronograma)
 
 
 ---

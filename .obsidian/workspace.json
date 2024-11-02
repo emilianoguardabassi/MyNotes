@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
+                "file": "2_Source/Probabilidad y estadística material.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Ley de Grandes Números y Métodos de ..."
+              "title": "Probabilidad y estadística material"
             }
           }
         ]
@@ -43,7 +43,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-folder-closed",
-              "title": "Explorador de archivos"
+              "title": "Files"
             }
           },
           {
@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "",
+                "query": "tag:#FaMAF",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -60,7 +60,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Buscar"
+              "title": "Search"
             }
           },
           {
@@ -111,11 +111,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "2_Source/Probabilidad y estadística material.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "Enlaces salientes"
+              "title": "Outgoing links from Probabilidad y estadística material"
             }
           },
           {
@@ -128,7 +129,7 @@
                 "useHierarchy": true
               },
               "icon": "lucide-tags",
-              "title": "Etiquetas"
+              "title": "Tags"
             }
           },
           {
@@ -136,12 +137,25 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "2_Source/Probabilidad y estadística material.md"
+              },
               "icon": "lucide-list",
-              "title": "Esquema"
+              "title": "Outline of Probabilidad y estadística material"
+            }
+          },
+          {
+            "id": "ffa455a730afce3d",
+            "type": "leaf",
+            "state": {
+              "type": "dictionary-view",
+              "state": {},
+              "icon": "quote-glyph",
+              "title": "Dictionary"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -150,26 +164,29 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Abrir selector rápido": false,
-      "graph:Abrir vista gráfica": false,
-      "canvas:Crear nuevo lienzo": false,
-      "daily-notes:Abrir la nota de hoy": false,
-      "templates:Insertar plantilla": false,
-      "command-palette:Abrir paleta de comandos": false
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
     }
   },
   "active": "653786797cce2aa9",
   "lastOpenFiles": [
-    "6_MainNotes/Introducción a la Lógica y Computación.md",
-    "6_MainNotes/CPU-Virtualización.md",
-    "6_MainNotes/Test de hipótesis.md",
-    "2_Source/Sistemas Operativos material.md",
-    "6_MainNotes/Persistencia.md",
-    "6_MainNotes/Concurrencia.md",
-    "6_MainNotes/RAM-Virtualización.md",
-    "6_MainNotes/Sistemas Operativos.md",
-    "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
     "6_MainNotes/Probabilidad y Estadística parte 2.md",
+    "6_MainNotes/Persistencia.md",
+    "2_Source/Sistemas Operativos material.md",
+    "6_MainNotes/Sistemas Operativos.md",
+    "6_MainNotes/Concurrencia.md",
+    "6_MainNotes/CPU-Virtualización.md",
+    "6_MainNotes/Intervalos de confianza y ....md",
+    "3_Indexes",
+    "1_Draft",
+    "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
+    "6_MainNotes/Introducción a la Lógica y Computación.md",
+    "6_MainNotes/Test de hipótesis.md",
+    "6_MainNotes/RAM-Virtualización.md",
     "2_Source/Probabilidad y estadística material.md",
     "2_Source/Introducción a la Lógica y Computación material.md",
     "5_Templates/Child Note.md",
@@ -177,7 +194,6 @@
     "5_Templates/Main Note.md",
     "5_Templates/Source Note.md",
     "6_MainNotes/().md",
-    "6_MainNotes/Intervalos de confianza y ....md",
     "6_MainNotes/<asd",
     "Sin título.canvas",
     "6_MainNotes/LenguajesLyC.md",
@@ -193,8 +209,6 @@
     "1_Draft",
     "5_Templates",
     "6_MainNotes",
-    "1-Draft",
-    "6- MainNotes",
-    "5-Templates"
+    "1-Draft"
   ]
 }
