@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2_Source/Probabilidad y estadística material.md",
+                "file": "4_Indexes/FaMAF.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Probabilidad y estadística material"
+              "title": "FaMAF"
             }
           }
         ]
@@ -43,7 +43,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "Explorador de archivos"
             }
           },
           {
@@ -52,7 +52,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "tag:#FaMAF",
+                "query": "tag:#Source",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -60,7 +60,7 @@
                 "sortOrder": "alphabetical"
               },
               "icon": "lucide-search",
-              "title": "Search"
+              "title": "Buscar"
             }
           },
           {
@@ -164,30 +164,38 @@
   },
   "left-ribbon": {
     "hiddenItems": {
-      "switcher:Open quick switcher": false,
-      "graph:Open graph view": false,
-      "canvas:Create new canvas": false,
-      "daily-notes:Open today's daily note": false,
-      "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "switcher:Abrir selector rápido": false,
+      "graph:Abrir vista gráfica": false,
+      "canvas:Crear nuevo lienzo": false,
+      "daily-notes:Abrir la nota de hoy": false,
+      "templates:Insertar plantilla": false,
+      "command-palette:Abrir paleta de comandos": false
     }
   },
   "active": "653786797cce2aa9",
   "lastOpenFiles": [
+    "2_Source/Probabilidad y estadística material.md",
+    "7_Media/Tabla_normal.pdf",
+    "4_Indexes/FaMAF.md",
+    "7_Media/Tabla_t.pdf",
+    "7_Media/Tabla Chi-Cuadrado.pdf",
+    "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
+    "7_Media",
+    "6_MainNotes/Guia 1 2024.pdf",
+    "6_MainNotes/Intervalos de confianza y ....md",
     "6_MainNotes/Probabilidad y Estadística parte 2.md",
-    "6_MainNotes/Persistencia.md",
+    "2_Source/Algoritmos y Estructura de Datos 2 material.md",
+    "6_MainNotes/Algoritmos y Estructura de Datos 2.md",
     "2_Source/Sistemas Operativos material.md",
     "6_MainNotes/Sistemas Operativos.md",
+    "6_MainNotes/Persistencia.md",
     "6_MainNotes/Concurrencia.md",
     "6_MainNotes/CPU-Virtualización.md",
-    "6_MainNotes/Intervalos de confianza y ....md",
     "3_Indexes",
     "1_Draft",
-    "6_MainNotes/Ley de Grandes Números y Métodos de ....md",
     "6_MainNotes/Introducción a la Lógica y Computación.md",
     "6_MainNotes/Test de hipótesis.md",
     "6_MainNotes/RAM-Virtualización.md",
-    "2_Source/Probabilidad y estadística material.md",
     "2_Source/Introducción a la Lógica y Computación material.md",
     "5_Templates/Child Note.md",
     "5_Templates/Daily Note.md",
@@ -200,15 +208,7 @@
     "6_MainNotes/Lógica Proposicional.md",
     "6_MainNotes/Estructuras Ordenadas.md",
     "6_MainNotes/PyE.md",
-    "6_MainNotes/Source.md",
-    "6_MainNotes/null.md",
-    "6_MainNotes/minotetesting.md",
     "4_Indexes",
-    "3_Tags",
-    "2_Source",
-    "1_Draft",
-    "5_Templates",
-    "6_MainNotes",
-    "1-Draft"
+    "3_Tags"
   ]
 }

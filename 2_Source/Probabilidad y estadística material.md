@@ -8,6 +8,7 @@ Tags: #Source #PyE #FaMAF
 - [Documentación](#Documentación)
 - [Clases](##Clases)
 - [Cronograma](##Cronograma)
+- [Herramientas](##Herramientas)
 
 
 ---
@@ -31,4 +32,11 @@ Tags: #Source #PyE #FaMAF
 -  **[Clase 31 de octubre](https://docs.google.com/presentation/d/1HT9tBvHyTWwSFhGCMDg82v2u3mMG0EnWbKMU9-tPXCM/edit#slide=id.p)**
 
 ## Cronograma
-- [Cronograma](https://docs.google.com/document/d/1j65bz3ai-FK4LxX7xpiIAjVU0zfqKKxw/edit)
+
+-  [Cronograma](https://docs.google.com/document/d/1j65bz3ai-FK4LxX7xpiIAjVU0zfqKKxw/edit)
+
+## Herramientas
+
+-  [[Tabla_normal.pdf]]
+-  [[Tabla_t.pdf]]
+-  [[Tabla Chi-Cuadrado.pdf]]
