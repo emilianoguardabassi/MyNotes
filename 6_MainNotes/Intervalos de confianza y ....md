@@ -5,6 +5,10 @@ __Tags__: #IntervalosDeConfianza #NivelDeConfianza #TeoremaCentralDelLímite #Py
 # Intervalos de confianza y ...
 ##### Volver a [[Probabilidad y Estadística parte 2]]
 
+Intervalos de confianza para la media.
+Intervalos de confianza para la varianza.
+Intervalos de confianza para la desviación estándar.
+
 
 ## Referencias
 

@@ -5,6 +5,11 @@ __Tags__: #TestDeHipótesis #ErrorTipo #P-valor #PyE #FaMAF
 # Test de hipótesis
 ##### Volver a [[Probabilidad y Estadística parte 2]]
 
+Pruebas bilaterales, cola superior, cola inferior.
+Definir estadístico de prueba.
+Definir tipos de errores.
+
+
 
 ## Referencias
 
