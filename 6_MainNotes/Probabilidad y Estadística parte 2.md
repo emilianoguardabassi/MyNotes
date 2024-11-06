@@ -12,7 +12,8 @@ Esta nota está centrada en la segunda parte de la materia de probabilidad y est
 -  **[[Intervalos de confianza y ...]]**
  
 -  **[[Test de hipótesis]]**
- 
+
+-  **[[Laboratorio PyE]]**
 
 ## Referencias
 
