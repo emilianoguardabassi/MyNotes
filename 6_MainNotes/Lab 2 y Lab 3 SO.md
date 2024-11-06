@@ -322,7 +322,7 @@ sleep(void *chan, struct spinlock *lk)
 5.  *wakeup(void\*)*
 wakeup recibe un puntero vacío (una suerte de comodín) que apunta  a algún proceso y lo saca del modo SLEEP a 
 READY para el scheduler (RUNNABLE para XV6). Esta función se utiliza cuando los semáforos se liberan para poder
-despertar a los procesos que fueron enviados a dormir (uno a solo, no todos al mismo tiempo).
+despertar a los procesos que fueron enviados a dormir.
 ``` c
 // Wake up all processes sleeping on chan.
 // Must be called without any p->lock.
@@ -579,9 +579,371 @@ Omití los manejos de error y cómo se dividen el fork dado que no es relevante 
 revisar [[Lab 1 SO]] que debería cubrir esos temas.
 ## Lab 3, Scheduler
 
+Esto es una especie de resumen para estudiar, si se quiere ver el informe, referirse aquí [[INFORME]]
+
+#### Objetivos del lab
+El planificador apropiativo de `xv6-riscv` utiliza un algoritmo sencillo para distribuir tiempo de procesador entre los procesos en ejecución, pero esto
+tiene un costo aparejado. Los objetivos de este laboratorio son: 
+-  Estudiar el funcionamiento del scheduler original de xv6-riscv 
+-  Analizar los procesos que se benefician/perjudican con esta decisión de diseño 
+- Desarrollar una implementación reemplazando la política de planificación por una propia que deberá respetar ciertas condiciones 
+- Analizar cómo la nueva política afecta a los procesos en comparación con el planificador original.
+
+
+### Programas bench
+
+Por parte de la cátedra, fuimos provistos por dos programas para testear el scheduler de xv6. Uno dedicado a tareas cpu-intensivas, y otro a
+tareas io-intensivas. Dispondré aquí las implementaciones pues serán útiles más tarde.
+
+##### IOBENCH
+```c
+#define IO_OPSIZE 64
+#define IO_EXPERIMENT_LEN 512
+
+static char data[IO_OPSIZE];
+
+int
+io_ops()
+{
+    int rfd, wfd;
+
+    int pid = getpid();
+
+    // Crear un path unico de archivo
+    char path[] = "12iops";
+    path[0] = '0' + (pid / 10);
+    path[1] = '0' + (pid % 10);
+
+    wfd = open(path, O_CREATE | O_WRONLY);
+
+    for(int i = 0; i < IO_EXPERIMENT_LEN; ++i){
+      write(wfd, data, IO_OPSIZE);
+    }
+
+    close(wfd);
+
+    rfd = open(path, O_RDONLY);
+
+    for(int i = 0; i < IO_EXPERIMENT_LEN; ++i){
+      read(rfd, data, IO_OPSIZE);
+    }
+
+    close(rfd);
+    return 2 * IO_EXPERIMENT_LEN;
+}
+
+void
+iobench(int N, int pid)
+{
+  memset(data, 'a', sizeof(data));
+  uint64 start_tick, end_tick, elapsed_ticks, metric;
+  int total_iops;
+
+  int *measurements = malloc(sizeof(int) * N);
+
+  for (int i = 0; i < N; i++){
+    start_tick = uptime();
+
+    // Realizar escrituras y lecturas de archivos
+    total_iops = io_ops();
+
+    end_tick = uptime();
+    elapsed_ticks = end_tick - start_tick;
+    metric = (total_iops * 100)/elapsed_ticks;  // Cambiar esto por la métrica adecuada
+    measurements[i] = metric;
+    printf("%d\t[iobench]\tio_metric\t%d\t%d\t%d\n",
+           pid, metric, start_tick, elapsed_ticks);
+  }
+}
+
+int
+main(int argc, char *argv[])
+{
+  int N, pid;
+  if (argc != 2) {
+    printf("Uso: benchmark N\n");
+    exit(1);
+  }
+
+  N = atoi(argv[1]);  // Número de repeticiones para los benchmarks
+  pid = getpid();
+  iobench(N, pid);
+
+  exit(0);
+}
+```
+
+##### CPUBENCH
+``` c
+#define CPU_MATRIX_SIZE 128
+#define CPU_EXPERIMENT_LEN 256
+
+#define MEASURE_PERIOD 1000
+
+
+// Multiplica dos matrices de tamaño CPU_MATRIX_SIZE x CPU_MATRIX_SIZE
+// y devuelve la cantidad de operaciones realizadas / 1000
+int
+cpu_ops_cycle() {
+  int kops_matmul = CPU_MATRIX_SIZE * CPU_MATRIX_SIZE * CPU_MATRIX_SIZE / 1000;
+  float A[CPU_MATRIX_SIZE][CPU_MATRIX_SIZE];
+  float B[CPU_MATRIX_SIZE][CPU_MATRIX_SIZE];
+  float C[CPU_MATRIX_SIZE][CPU_MATRIX_SIZE];
+
+  // Inicializar matrices con valores arbitrarios
+  for (int i = 0; i < CPU_MATRIX_SIZE; i++) {
+    for (int j = 0; j < CPU_MATRIX_SIZE; j++) {
+        A[i][j] = i + j;
+        B[i][j] = i - j;
+    }
+  }
+
+  // Multiplicar matrices N veces
+  for (int n = 0; n < CPU_EXPERIMENT_LEN; n++) {
+    for (int i = 0; i < CPU_MATRIX_SIZE; i++) {
+      for (int j = 0; j < CPU_MATRIX_SIZE; j++) {
+        C[i][j] = 0.0f;
+        for (int k = 0; k < CPU_MATRIX_SIZE; k++) {
+          C[i][j] += 2.0f * A[i][k] * B[k][j];
+        }
+      }
+    }
+  }
+
+  return (kops_matmul * CPU_EXPERIMENT_LEN);
+}
+
+void
+cpubench(int N, int pid) {
+  uint64 start_tick, end_tick, elapsed_ticks, total_cpu_kops, metric;
+  int *measurements = malloc(sizeof(int) * N);
+
+  // Realizar N ciclos de medicion
+  for(int i = 0; i < N; ++i) {
+    total_cpu_kops = 0;
+    start_tick = uptime();
+
+    total_cpu_kops = cpu_ops_cycle();
+
+    end_tick = uptime();
+    elapsed_ticks = end_tick - start_tick;
+
+    // TODO: Cambiar esto por la métrica adecuada
+    metric = total_cpu_kops/elapsed_ticks;
+    measurements[i] = metric;
+    printf("%d\t[cpubench]\tcpu_metric\t%d\t%d\t%d\n",
+           pid, metric, start_tick, elapsed_ticks);
+  }
+}
+
+int
+main(int argc, char *argv[])
+{
+  int N, pid;
+  if (argc != 2) {
+    printf("Uso: benchmark N\n");
+    exit(1);
+  }
+
+  N = atoi(argv[1]);  // Número de repeticiones para los benchmarks
+  pid = getpid();
+  cpubench(N, pid);
+
+  exit(0);
+}
+```
+##### Métrica
+
+En ambos programas hay una variable definida como metric. Esta originalmente era el número de operaciones que se ejecutaban (cpubound para 
+cpubench y iobound para iobench), era parte de la consigna cambiarla por algo que pudieramos ir siguiendo para obtener información. Terminamos
+cambiandola por cantidad de operaciones dividido tiempo transcurrido (que fue sugerido por los profes en el laboratorio, nos faltó creatividad).
+### Scheduler RR 
+El scheduler original que trae xv6 es uno de Round Robin que obtiene los procesos de una lista de ellos y chequea que estén en el estado RUNNABLE,
+si cumplen con esa condición los pasa a RUNNING y hace el context switch. Este scheduler está en kernel/proc.c y su implementación es:
+
+```c
+void
+scheduler(void)
+{
+  struct proc *p;
+  struct cpu *c = mycpu();
+
+  c->proc = 0;
+  for(;;){
+    // Avoid deadlock by ensuring that devices can interrupt.
+    intr_on();
+
+    for(p = proc; p < &proc[NPROC]; p++) {
+      acquire(&p->lock);
+      if(p->state == RUNNABLE) {
+        // Switch to chosen process.  It is the process's job
+        // to release its lock and then reacquire it
+        // before jumping back to us.
+        p->state = RUNNING;
+        c->proc = p;
+        swtch(&c->context, &p->context);
+
+        // Process is done running for now.
+        // It should have changed its p->state before coming back.
+        c->proc = 0;
+      }
+      release(&p->lock);
+    }
+  }
+}
+```
+### Quantum
+Cada proceso que es seleccionado por el scheduler debe ser ejecutado, pero... ¿por cuánto tiempo? ¿hasta que termine?. Bueno, esto ya viene
+especificado dentro de los sistemas operativos y se suele llamar quanto, que es una unidad de tiempo en la que los procesos pueden correr,
+cuando se acaba, deben ser sacador de RUNNING y llamar de nuevo al scheduler. En particular xv6 tiene un quantum de 1.000.000, que 
+emulado por qemu, es aproximadamente $1/10s$. 
+Este quanto está implementado en kernel/start.c en la función timerinit() con el nombre interval:
+
+```c
+void
+timerinit()
+{
+  // each CPU has a separate source of timer interrupts.
+  int id = r_mhartid();
+
+  // ask the CLINT for a timer interrupt.
+  int interval = 1000000; // cycles; about 1/10th second in qemu.
+  *(uint64*)CLINT_MTIMECMP(id) = *(uint64*)CLINT_MTIME + interval;
+
+  // prepare information in scratch[] for timervec.
+  // scratch[0..2] : space for timervec to save registers.
+  // scratch[3] : address of CLINT MTIMECMP register.
+  // scratch[4] : desired interval (in cycles) between timer interrupts.
+  uint64 *scratch = &timer_scratch[id][0];
+  scratch[3] = CLINT_MTIMECMP(id);
+  scratch[4] = interval;
+  w_mscratch((uint64)scratch);
+
+  // set the machine-mode trap handler.
+  w_mtvec((uint64)timervec);
+
+  // enable machine-mode interrupts.
+  w_mstatus(r_mstatus() | MSTATUS_MIE);
+
+  // enable machine-mode timer interrupts.
+  w_mie(r_mie() | MIE_MTIE);
+}
+```
+Para los distintos experimentos que tendremos que correr en este laboratorio, se nos irá pidiendo que achiquemos el quanto y describamos
+el comportamiento de los programas.
+A modo de resumen simple, si se quieren los detalles ir al [[INFORME]], cando el quanto se achica los procesos cpubound sufren mucho y los
+iobound también lo hacen, pero no tanto, pues como llaman a sleep muy seguido y no tienen tantas operaciones, no sufren tanto el context
+switch.
+Cuando se implemente MLFQ y se midan los mismos experimentos pero en ese scheduler, vamos a ver resultados similares, pero algo
+distintos. Con MLFQ los procesos iobound se benefician pues elevan su prioridad cada vez que se bloquean, mientras que los cpubound
+pierden prioridad y quedan en un  posible dilema de starvation (ver la siguiente sección para entender MLFQ). Los cambios entre los 
+experimentos no son tan notables por el hecho de que los iobound se bloquean tan seguido que no importa mucho su prioridad, por lo que
+sigue eligiendo los cpubound muchas veces.
+Al achicar el quanto con MLFQ se nota un poco más el cambio en las prioridades. Los cpubound sufren mucho, y los iobound sufren tambien
+pero menos, como en el caso RR. Pero aquí podemos notar que la mayoría de procesos llamados de iobound fueron ejecutados antes de que
+terminen todos los cpubound, caso que no ocurria antes. Es decir, hay un favoritismo, aunque poco perceptible para los iobound. En casos 
+extremos se puede notar el starvation que sufren los procesos de colas bajas.
+
+### Scheduler MLFQ
+Luego de haber hecho todos los experimentos con el Round Robin, se nos pide que implementemos un MLFQ para reemplazarlo, con las
+siguientes reglas:
+
+1. Si el proceso A tiene mayor prioridad que el proceso B, corre A (no B).
+2. Si dos procesos A y B tienen la misma prioridad, corre el que menos veces fue elegido por el planificador.
+3. Cuando un proceso se inicia, su prioridad será máxima.
+4. Descender de prioridad cada vez que el proceso gasta su quantum realizando cómputo. Ascender de prioridad cada vez que el proceso
+se bloquea antes de terminar su quanto.
+
+Lo primero que se hizo fue modificar el struct proc (kernel/proc.h), agregando dos opciones más, priority y chosen_count. La primera llevaba registro
+de la cola de prioridad a la que se le había asignado, mientras que chosen_count guardaba las veces que el proceso había sido corrido. Luego de eso,
+cambiamos la implementación de procdump para que también mostrara estos dos datos nuevos. La piroridad máxima para este trabajo fue de 3, por 
+lo que en kernel/params.h definimos un macro NPRIO 3, que usamos para setear la prioridad máxima a NPRIO-1.
+Ahora viene lo importante, hacer el cambio en el mismo scheduler. Creo que será más fácil mostrar primero el código y después tratar de explicar
+lo que hicimos.
+
+```c
+void
+scheduler(void)
+{
+  //highest priority proc for priority identification
+  struct proc *highest_priority_proc;
+  struct proc *p;
+  struct cpu *c = mycpu();
+
+  c->proc = 0;
+  for(;;){
+    // Avoid deadlock by ensuring that devices can interrupt.
+    intr_on();
+
+    //initialization of highest_priority_proc as NULL.
+    highest_priority_proc = 0;
+    for(p = proc; p < &proc[NPROC]; p++) {
+      acquire(&p->lock);
+      if(p->state == RUNNABLE) {
+        if (!highest_priority_proc || //first cicle process
+            p->priority > highest_priority_proc->priority ||   // Rule 1.
+            (p->priority == highest_priority_proc->priority && //Rule 2.
+            p->chosen_count < highest_priority_proc->chosen_count)) {
+
+          // Releases the lock of the previous process
+          if(highest_priority_proc) {
+            release(&highest_priority_proc->lock);
+          }
+          //sets p as the new highest priority process
+          highest_priority_proc = p;
+
+        } else {
+          //Releases the lock of the process if not selected.
+          release(&p->lock);
+        }
+
+      } else {
+      // if !RUNNABLE release the lock
+      release(&p->lock);
+      }
+    }
+        // Switch to chosen process.  It is the process's job
+        // to release its lock and then reacquire it
+        // before jumping back to us.
+      if (highest_priority_proc && highest_priority_proc->state == RUNNABLE) {
+        p = highest_priority_proc;
+        p->state = RUNNING;
+        c->proc = p;
+        p->chosen_count++; //updates the counter
+        swtch(&c->context, &p->context);
+
+        // Process is done running for now.
+        // It should have changed its p->state before coming back.
+        c->proc = 0;
+
+        //priority adjusted according to the behaviour
+        if (p->state == SLEEPING) {
+          if (p->priority < NPRIO - 1) {
+            p->priority ++; //Boost the priority if bloqued before quantums ends
+          }
+        } else if (p->state == RUNNABLE) {
+          if (p->priority > 0) {
+            p->priority--; //Decrements priority if quantum was used
+          }
+        }
+      release(&p->lock);
+    }
+  }
+}
+```
+Antes teníamos un loop en el que cada vez que se topaba con un proceso en estado RUNNABLE, lo preparaba para el cambio de contexto. Ahora,
+el loop está encargado de realizar todos los chequeos de prioridad para todos los procesos del arreglo, salvo que encuentre alguno que cumpla las
+condiciones rápido. Esto ralentiza el scheduler porque es una manera ineficiente de elegir el próximo proceso, pero funciona. Luego de que realiza
+todos los chequeos (la lógica de los ifs y del puntero auxiliar quedan para el lector) realiza las asignaciones habituales que ya hacía el scheduler 
+anterior. La única diferencia es que ahora hay que usar el puntero auxiliar para recuperar el proceso, y se deben  hacer una sume de 1 para chosen_count.
+Luego de que hace el cambio de contexto se chequean las reglas 3 y 4, si el proceso está en SLEEPING, es decir, bloqueado, se le aumenta la prioridad.
+Si el proceso sigue en RUNNABLE se le reduce la prioridad.
+El planteamiento es sencillo, aunque no optimo.
+
 
 ## Referencias
 
 -  [[Sistemas Operativos material]]
 -  [[Lab2 - Enunciado.pdf]]
-- [[Lab3 - Enunciado.pdf]]
+-  [[Lab3 - Enunciado.pdf]]
+-  [xv6 Manual](https://pdos.csail.mit.edu/6.828/2020/xv6/book-riscv-rev1.pdf)
