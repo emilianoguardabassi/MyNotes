@@ -5,9 +5,12 @@ __Tags__: #TestDeHipótesis #ErrorTipo #P-valor #PyE #FaMAF
 # Test de hipótesis
 ##### Volver a [[Probabilidad y Estadística parte 2]]
 
-Pruebas bilaterales, cola superior, cola inferior.
-Definir estadístico de prueba.
-Definir tipos de errores.
+-  **TCL** (Teorema central del límite): Básicamente dice que si tenemos una muestra lo suficientemente grande, con una media y varianza
+finita, la distribución de la media muestral tiende a seguir una distribución normal, sin importar la forma de la distribución original de la
+población.
+-  Pruebas bilaterales, cola superior, cola inferior.
+-  Definir estadístico de prueba.
+-  Definir tipos de errores.
 
 
 
