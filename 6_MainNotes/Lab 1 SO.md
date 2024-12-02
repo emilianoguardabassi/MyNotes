@@ -40,7 +40,7 @@ MyBash $>  ls -l | wc -l
 
 Esto se parsea de la siguiente manera:
 
-( \[(\["ls", "-l"\], NULL, NULL), ( \["wc", "-l"\], NULL)], true)
+( \[(\["ls", "-l"\], NULL, NULL), ( \["wc", "-l"\], NULL, NULL)], true)
 
 donde el true indica que va a esperar y no se va a ira segundo plano.
 
@@ -64,7 +64,7 @@ libre.
 - write: Escribe en un fd que se le pase, dado un buffer y una cantidad de bytes.
 - read: Lee de un fd que se le pase, dado un buffer y una cantidad de bytes.
 - pipe: pipe recibe un arregle de tamaño dos e interconecta las entradas 0 y 1 formando una tubería para el paso de datos.
-Lo que se escriba en 0 va a salir por 1.
+Lo que se escriba en 0 va a salir por 1. Entra por 0 y sale por 1: write -> pipe -> read
 
 ### Main
 

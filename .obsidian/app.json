@@ -6,6 +6,6 @@
   "vimMode": true,
   "readableLineLength": false,
   "alwaysUpdateLinks": true,
-  "defaultViewMode": "preview",
+  "defaultViewMode": "source",
   "livePreview": true
 }
